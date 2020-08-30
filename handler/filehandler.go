@@ -14,9 +14,12 @@ import (
 
 const (
 	// FILEHASH file hash value.
-	FILEHASH     = "filehash"
-	FILENAME     = "filename"
-	OPERATION    = "op"
+	FILEHASH = "filehash"
+	// FILENAME file name
+	FILENAME = "filename"
+	// OPERATION operation
+	OPERATION = "op"
+	// OpTypeRename operation type
 	OpTypeRename = "0"
 )
 
@@ -66,7 +69,9 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 		// Set fileSha1
 		fileMeta.FileSha1 = utils.FileSha1(newFile)
 		// Add fileMeta info the the fileMetaMap
-		meta.UpdateFileMeta(fileMeta)
+		// meta.UpdateFileMeta(fileMeta)
+		// change to save file Meta to Db rather than memory
+		meta.UpdateFileMetaDb(fileMeta)
 		// Redirect to new page
 		http.Redirect(w, r, "/file/upload/suc", http.StatusFound)
 	}
@@ -80,8 +85,12 @@ func UploadSucHandler(w http.ResponseWriter, r *http.Request) {
 // GetFileMetaHandler get meta data of a file.
 func GetFileMetaHandler(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
-	fHash := r.Form[FILEHASH][0] // returns a array and get the first one.
-	fMeta := meta.GetFileMeta(fHash)
+	// returns a array and get the first one
+	fHash := r.Form[FILEHASH][0]
+	// fMeta := meta.GetFileMeta(fHash)
+	// getFromDb
+	fMeta, err := meta.GetFileMetaFromDb(fHash)
+
 	// Encoding to json
 	data, err := json.Marshal(fMeta)
 	if err != nil {
@@ -98,7 +107,7 @@ func GetFileMetaHandler(w http.ResponseWriter, r *http.Request) {
 
 // }
 
-// DownloadByFileHashHandler down load file by it's hash
+// DownloadByFileHashHandler down load file by it's hash.
 func DownloadByFileHashHandler(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
 	fHash := r.Form.Get(FILEHASH)
@@ -123,7 +132,7 @@ func DownloadByFileHashHandler(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(data)
 }
 
-// UpdateMetaInfoHandle change filename by file hash
+// UpdateMetaInfoHandle change filename by file hash.
 func UpdateMetaInfoHandle(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
 	opType := r.Form.Get(OPERATION)
@@ -151,6 +160,7 @@ func UpdateMetaInfoHandle(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(data)
 }
 
+// DelFileHandler delete file handler.
 func DelFileHandler(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
 	fileSha1 := r.Form.Get(FILEHASH)
