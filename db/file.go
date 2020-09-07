@@ -29,6 +29,7 @@ func OnFileUploadFinished(fileHash, fileName, fileAddr string, fileSize int64) b
 	return false
 }
 
+// TableFile represents a file
 type TableFile struct {
 	FileHash string
 	FileName sql.NullString
@@ -48,7 +49,7 @@ func GetFileMetaFromDb(fileSha1 string) (*TableFile, error) {
 	err = stmt.QueryRow(fileSha1).Scan(&tf.FileHash, &tf.FileAddr, &tf.FileAddr, &tf.FileSize)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			fmt.Println("Query file info for nothing ")
+			fmt.Println("Query file info for nothing")
 			return nil, nil
 		} else {
 			fmt.Printf("error during queryRow: %s", err.Error())

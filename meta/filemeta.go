@@ -40,6 +40,7 @@ func UpdateFileMetaDb(fileMeta Filemeta) bool {
 	return db.OnFileUploadFinished(fileMeta.FileSha1, fileMeta.FileName, fileMeta.Location, fileMeta.FileSize)
 }
 
+// GetFileMetaFromDb get file meta info form db
 func GetFileMetaFromDb(fileSha1 string) (*Filemeta, error) {
 	tFile, err := db.GetFileMetaFromDb(fileSha1)
 	if tFile == nil || err != nil {

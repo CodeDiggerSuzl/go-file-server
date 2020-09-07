@@ -90,7 +90,6 @@ func GetFileMetaHandler(w http.ResponseWriter, r *http.Request) {
 	// fMeta := meta.GetFileMeta(fHash)
 	// getFromDb
 	fMeta, err := meta.GetFileMetaFromDb(fHash)
-
 	// Encoding to json
 	data, err := json.Marshal(fMeta)
 	if err != nil {

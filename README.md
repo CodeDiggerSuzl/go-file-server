@@ -116,6 +116,10 @@ CREATE TABLE `tbl_user_file` (
 - [ ] mysql_prepared_statements
 - [ ] https://blog.biezhi.me/2018/10/values-or-pointers-in-golang.html
 
+1. Use `sql.DB` to create the db connection.
+2. Use `sql.Open` to create goroutine-safety `sql.DB` object.
+3. Use Prepared Statement to avoid sql injection.
+
 # What I need ?
 
 1. RateLimit from stream video
