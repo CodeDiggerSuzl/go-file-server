@@ -16,6 +16,8 @@ func main() {
 	http.HandleFunc("/file/download", handler.DownloadByFileHashHandler)
 	http.HandleFunc("/file/update", handler.UpdateMetaInfoHandle)
 	http.HandleFunc("/file/del", handler.DelFileHandler)
+
+	http.HandleFunc("/user/signup", handler.SignUpHandler)
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		fmt.Printf("Fail to start server, the error is: %s", err.Error())

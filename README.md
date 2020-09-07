@@ -112,13 +112,19 @@ CREATE TABLE `tbl_user_file` (
   - Divide by all fields of a large table into small table
   - Use a field to connect the small table
 
-### DB ops in go
+#### DB ops in go
 - [ ] mysql_prepared_statements
 - [ ] https://blog.biezhi.me/2018/10/values-or-pointers-in-golang.html
 
 1. Use `sql.DB` to create the db connection.
 2. Use `sql.Open` to create goroutine-safety `sql.DB` object.
 3. Use Prepared Statement to avoid sql injection.
+
+### Account system and Authentication
+1. Support use login and register and login
+2. Support use session authentication
+3. Isolation of user data resources
+    
 
 # What I need ?
 
