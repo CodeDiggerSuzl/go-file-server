@@ -5,7 +5,7 @@ import (
 	"go-file-server/db/mysql"
 )
 
-// UserSign username and passwd
+// UserSign username and password
 func UserSign(username, password string) bool {
 	stmt, err := mysql.GetDbConn().Prepare("INSERT ignore into tbl_user(`user_name`,`user_pwd`) values (?,?)")
 	if err != nil {
